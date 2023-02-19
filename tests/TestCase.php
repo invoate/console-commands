@@ -2,9 +2,8 @@
 
 namespace Invoate\ConsoleCommands\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Invoate\ConsoleCommands\ConsoleCommandsServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

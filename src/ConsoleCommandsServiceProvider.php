@@ -2,9 +2,9 @@
 
 namespace Invoate\ConsoleCommands;
 
+use Invoate\ConsoleCommands\Commands\ConsoleCommandsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Invoate\ConsoleCommands\Commands\ConsoleCommandsCommand;
 
 class ConsoleCommandsServiceProvider extends PackageServiceProvider
 {
