@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Invoate\ConsoleCommands\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ConsoleCommandsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'console-commands';
 
     public $description = 'My command';
 
