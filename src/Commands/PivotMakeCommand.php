@@ -17,10 +17,12 @@ class PivotMakeCommand extends Command
     protected $signature = 'make:pivot {table1 : The name of the first table or model}
         {table2 : The name of the second table or model}
         {--c|columns=* : Additional columns to generate (column:type) }
-        {--i|with-id : Generate an ID column}
-        {--t|without-timestamps : Do not generate timestamp columns}
         {--f|without-foreign-keys : Generate foreign key constraints}
-        {--p|pivot-model : Generate a pivot model class}';
+        {--m|model : Generate a pivot model class}
+        {--i|with-id : Generate an ID column}
+        {--id-type=id : The laravel supported ID type}
+        {--without-timestamps : Do not generate timestamp columns}
+        {--without-columns : Do not generate any columns}';
 
     /**
      * The console command description.
@@ -48,34 +50,52 @@ class PivotMakeCommand extends Command
             $this->getTableName($this->argument('table2')),
         ]);
 
-        $columns = [];
+        $foreignIds = Arr::map($tables, function (string $value) {
+            return Str::singular($value);
+        });
 
-        if ($this->option('with-id')) {
-            $columns[] = '$table->id();';
-        }
+        if (! $this->option('without-columns')) {
+            $columns = [];
 
-        if (! $this->option('without-foreign-keys')) {
-            $columns[] = "\$table->foreignId('$tables[0]_id')->constrained()->onDelete('cascade');";
-            $columns[] = "\$table->foreignId('$tables[1]_id')->constrained()->onDelete('cascade');";
-        }
+            if ($this->option('with-id')) {
+                $type = $this->option('id-type');
+                $columns[] = "\$table->$type();";
+            }
 
-        if (! $this->option('without-timestamps')) {
-            $columns[] = '$table->timestamps();';
-        }
+            if ($this->option('without-foreign-keys')) {
+                $columns[] = "\$table->integer('$foreignIds[0]_id');";
+                $columns[] = "\$table->integer('$foreignIds[1]_id');";
+            } else {
+                $columns[] = "\$table->foreignId('$foreignIds[0]_id')->constrained();";
+                $columns[] = "\$table->foreignId('$foreignIds[1]_id')->constrained();";
+            }
 
-        $columnsOption = $this->getColumns();
-        foreach ($columnsOption as $column) {
-            $column = explode(':', $column);
-            $type = $column[1] ?? 'string';
-            $columns[] = "\$table->$type('$column[0]');";
+            if (! $this->option('without-timestamps')) {
+                $columns[] = '$table->timestamps();';
+            }
+
+            $columnsOption = $this->getColumns();
+            foreach ($columnsOption as $column) {
+                $column = explode(':', $column);
+                $type = $column[1] ?? 'string';
+                $columns[] = "\$table->$type('$column[0]');";
+            }
         }
 
         $tableName = implode('_', $tables);
         $migrationName = $this->getPath($tableName, $this->getMigrationsPath());
         $stub = $this->getStub();
-        $columns = $this->generateColumns($columns);
+        $columns = $this->generateColumns($columns ?? ['//']);
 
         $this->generateMigrationFile($stub, $migrationName, [$tableName, $columns]);
+
+        if ($this->option('model')) {
+            $modelName = Str::studly(implode('_', $foreignIds));
+            $this->call('make:model', [
+                'name' => $modelName,
+                '--pivot' => true
+            ]);
+        }
     }
 
     protected function getTableName(string $name): string
@@ -87,7 +107,7 @@ class PivotMakeCommand extends Command
             return (new $class)->getTable();
         }
 
-        return $name;
+        return Str::of($name)->lower($name)->plural();
     }
 
     protected function getColumns(): array
