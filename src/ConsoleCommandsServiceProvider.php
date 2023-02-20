@@ -2,6 +2,7 @@
 
 namespace Invoate\ConsoleCommands;
 
+use Invoate\ConsoleCommands\Commands\PivotMakeCommand;
 use Invoate\ConsoleCommands\Commands\RefreshCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -18,6 +19,7 @@ class ConsoleCommandsServiceProvider extends PackageServiceProvider
         $package
             ->name('console-commands')
             ->hasConfigFile()
-            ->hasCommand(RefreshCommand::class);
+            ->hasCommand(RefreshCommand::class)
+            ->hasCommand(PivotMakeCommand::class);
     }
 }
