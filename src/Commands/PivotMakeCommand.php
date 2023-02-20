@@ -4,8 +4,8 @@ namespace Invoate\ConsoleCommands\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class PivotMakeCommand extends Command
 {
@@ -81,7 +81,7 @@ class PivotMakeCommand extends Command
     protected function getTableName(string $name): string
     {
         $modelsNamespace = 'App\\Models\\';
-        $class = $modelsNamespace . Str::studly(Str::singular($name));
+        $class = $modelsNamespace.Str::studly(Str::singular($name));
 
         if (class_exists($class)) {
             return (new $class)->getTable();
@@ -127,6 +127,7 @@ class PivotMakeCommand extends Command
     protected function getStub(): string
     {
         $stubPath = __DIR__.'/stubs/migration.create.stub';
+
         return $this->filesystem->get($stubPath);
     }
 
