@@ -93,7 +93,7 @@ class PivotMakeCommand extends Command
             $modelName = Str::studly(implode('_', $foreignIds));
             $this->call('make:model', [
                 'name' => $modelName,
-                '--pivot' => true
+                '--pivot' => true,
             ]);
         }
     }
