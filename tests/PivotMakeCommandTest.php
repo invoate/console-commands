@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Eloquent\Model;
-
 use function Pest\Laravel\artisan;
 use function Pest\Laravel\mock;
 
