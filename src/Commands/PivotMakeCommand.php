@@ -103,11 +103,11 @@ class PivotMakeCommand extends Command
         $modelsNamespace = 'App\\Models\\';
         $class = $modelsNamespace.Str::studly(Str::singular($name));
 
-        if (class_exists($class)) {
-            return (new $class)->getTable();
+        try {
+            return app($class)->getTable();
+        } catch(\Exception $e) {
+            return Str::of($name)->lower($name)->plural();
         }
-
-        return Str::of($name)->lower($name)->plural();
     }
 
     protected function getColumns(): array
