@@ -31,8 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Invoate\\ConsoleCommands\\": "src",
-            "Invoate\\ConsoleCommands\\Database\\Factories\\": "database/factories"
+            "Invoate\\ConsoleCommands\\": "src"
         }
     },
     "autoload-dev": {
@@ -58,12 +57,9 @@
         "laravel": {
             "providers": [
                 "Invoate\\ConsoleCommands\\ConsoleCommandsServiceProvider"
-            ],
-            "aliases": {
-                "ConsoleCommands": "Invoate\\ConsoleCommands\\Facades\\ConsoleCommands"
-            }
+            ]
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
