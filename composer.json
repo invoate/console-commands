@@ -1,11 +1,7 @@
 {
     "name": "invoate/console-commands",
     "description": "This is my package console-commands",
-    "keywords": [
-        "invoate",
-        "laravel",
-        "console-commands"
-    ],
+    "keywords": ["invoate", "console", "cli", "php", "laravel", "laravel-package", "productivity", "development-workflow", "developer-tools"],
     "homepage": "https://github.com/invoate/console-commands",
     "license": "MIT",
     "authors": [
