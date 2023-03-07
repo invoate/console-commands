@@ -104,9 +104,9 @@ class PivotMakeCommand extends Command
         $class = $modelsNamespace.Str::studly(Str::singular($name));
 
         try {
-            return app($class)->getTable();
+            return Str::singular(app($class)->getTable());
         } catch(\Exception $e) {
-            return Str::of($name)->lower($name)->plural();
+            return Str::of($name)->lower()->singular();
         }
     }
 

@@ -17,13 +17,13 @@ it('can generate a migration', function () {
 it('can generate a migration with the correct name', function () {
     artisan('make:pivot', ['table1' => 'alpha', 'table2' => 'bravo'])
         ->assertSuccessful()
-        ->expectsOutputToContain('create_alphas_bravos_table');
+        ->expectsOutputToContain('create_alpha_bravo_table');
 });
 
 it('can alphabetise the tables in the migration name', function () {
     artisan('make:pivot', ['table1' => 'bravo', 'table2' => 'alpha'])
         ->assertSuccessful()
-        ->expectsOutputToContain('create_alphas_bravos_table');
+        ->expectsOutputToContain('create_alpha_bravo_table');
 });
 
 it('can generate the table names from an Eloquent model', function () {
@@ -38,5 +38,5 @@ it('can generate the table names from an Eloquent model', function () {
 
     artisan('make:pivot', ['table1' => 'User', 'table2' => 'Organisation'])
         ->assertSuccessful()
-        ->expectsOutputToContain('create_members_orgs_table');
+        ->expectsOutputToContain('create_member_org_table');
 });
